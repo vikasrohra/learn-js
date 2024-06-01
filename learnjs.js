@@ -11,7 +11,6 @@
 // // Namaste JS
 // // 7
 
-
 // getName();
 // console.log(a);
 
@@ -25,7 +24,6 @@
 // // Namaste JS
 // // Undefined
 
-
 // getName();
 // console.log(a);
 
@@ -37,8 +35,6 @@
 // // Namaste JS
 // // Uncaught ReferenceError: a is not defined
 
-
-
 // console.log(a);
 // getName();
 
@@ -48,7 +44,6 @@
 
 // // Output:
 // // Uncaught ReferenceError: a is not defined
-
 
 // getName();
 // console.log(a);
@@ -62,7 +57,6 @@
 // // Output:
 // // Uncaught TypeError: getName is not a function
 
-
 // getName();
 // console.log(x);
 
@@ -74,7 +68,6 @@
 
 // // Output:
 // // Uncaught TypeError: getName is not a function
-
 
 // var x = 1;
 // a();
@@ -91,11 +84,10 @@
 //     console.log(x);
 // }
 
-// // Output: 
+// // Output:
 // // 10
 // // 100
 // // 1
-
 
 // var a = 1;
 // a();
@@ -115,7 +107,6 @@
 // // Output:
 // // Uncaught TypeError: a is not a function
 
-
 // function a() {
 //     console.log(b);
 // }
@@ -124,7 +115,6 @@
 
 // // Output:
 // //10
-
 
 // function a() {
 //     c();
@@ -137,7 +127,6 @@
 
 // // Output:
 // //10
-
 
 // function a() {
 //     var b = 10;
@@ -150,7 +139,6 @@
 
 // // Output:
 // //10
-
 
 // function a() {
 //     var b = 10;
@@ -163,7 +151,6 @@
 
 // // Output:
 // // Uncaught ReferenceError: b is not defined
-
 
 // console.log(b);
 // let a = 10;
@@ -179,7 +166,6 @@
 // // Output:
 // // 100
 
-
 // console.log(a);
 // let a = 10;
 // var b = 100;
@@ -187,7 +173,6 @@
 // // Output:
 // // Uncaught ReferenceError: Cannot access 'a' before initialization
 
-
 // let a = 10;
 // var b = 100;
 // console.log(a);
@@ -198,62 +183,56 @@
 // let a = 100;
 // let a = 10;
 
-// // Output: 
+// // Output:
 // // Uncaught SyntaxError: Identifier 'a' has already been declared
-
-
 
 // let a = 100;
 // var a = 10;
 
-// // Output: 
+// // Output:
 // // Uncaught SyntaxError: Identifier 'a' has already been declared
-
 
 // console.log(a);
 // var a = 100;
 // var a = 10;
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // undefined
 // // 10
-
 
 // const a;
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // Uncaught SyntaxError: Missing initializer in const declaration
 
 // const a;
 // a = 10;
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // Uncaught SyntaxError: Missing initializer in const declaration
-
 
 // console.log("Namaste");
 // const a = 1;
 // a = 10;
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // Uncaught TypeError: Assignment to constant variable.
-
 
 // const a = 1;
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // 1
 
 // {
 // 	var a = 10;
 // 	let b = 100;
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
@@ -274,7 +253,7 @@
 // 	var a = 10;
 // 	let b = 100;
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
@@ -291,12 +270,11 @@
 //// 10
 //// Uncaught ReferenceError: b is not defined
 
-
 // for (let i=0; i<1; i++){
 // 	var a = 10;
 // 	let b = 100;
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
@@ -313,39 +291,37 @@
 // //// 10
 // //// Uncaught ReferenceError: b is not defined
 
-
 // var a = 99;
 // {
 // 	var a = 10;
 // 	let b = 100;
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
 // }
 
-// // Output: 
+// // Output:
 // // 10
 // // 100
 // // 1000
 
-// // Inner a's initialization shadows outer a, this is because variale declared with var are in global scope 
-
+// // Inner a's initialization shadows outer a, this is because variale declared with var are in global scope
 
 // var a = 99;
 // {
 // 	var a = 10;
 // 	let b = 100;
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
 // }
 // console.log(a);
 
-// // Output: 
+// // Output:
 // // 10
 // // 100
 // // 1000
@@ -353,20 +329,19 @@
 
 // // Inner a's initialization shadows outer a, this is because variale declared with var are in global scope (same level hence first it was undefined during memory creation phase, then becomes 99, then becomes 10)
 
-
 // let b = 99;
 // {
 // 	var a = 10;
 // 	let b = 100; // It shadows the outer b
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
 // }
 // console.log(b);
 
-// // Output: 
+// // Output:
 // // 10
 // // 100
 // // 1000
@@ -378,16 +353,15 @@
 // 	var a = 10;
 // 	let b = 100; // It shadows the outer b
 // 	const c = 1000;
-	
+
 // 	console.log(a);
 // 	console.log(b);
 // 	console.log(c);
 // }
 // console.log(b);
 
-// // Output: 
+// // Output:
 // // Uncaught ReferenceError: Cannot access 'b' before initialization
-
 
 // const b = 99;
 // function x() {
@@ -397,10 +371,9 @@
 // x();
 // console.log(b);
 
-// // Output: 
+// // Output:
 // // 100
 // // 99
-
 
 // const b = 99;
 // function x() {
@@ -410,10 +383,9 @@
 // x();
 // console.log(b);
 
-// // Output: 
+// // Output:
 // // 100
 // // 99
-
 
 // var b = 99;
 // function x() {
@@ -423,19 +395,17 @@
 // x();
 // console.log(b);
 
-// // Output: 
+// // Output:
 // // 100
 // // 99
 
-
 // let a = 10;
 // {
 //     var a = 99;
 // }
 
 // // Output:
-// // Uncaught SyntaxError: Identifier 'a' has already been declared (Illegal Shadowing) 
-
+// // Uncaught SyntaxError: Identifier 'a' has already been declared (Illegal Shadowing)
 
 // const a = 10;
 // {
@@ -443,8 +413,7 @@
 // }
 
 // // Output:
-// // Uncaught SyntaxError: Identifier 'a' has already been declared (Illegal Shadowing) 
-
+// // Uncaught SyntaxError: Identifier 'a' has already been declared (Illegal Shadowing)
 
 // let a = 10;
 // {
@@ -453,14 +422,12 @@
 
 // // Desc: Legal Shadowing
 
-
 // const a = 10;
 // {
 //     const a = 99;
 // }
 
 // // Desc: Legal Shadowing
-
 
 // var a = 10;
 // {
@@ -469,14 +436,12 @@
 
 // // Desc: Legal Shadowing
 
-
 // var a = 10;
 // {
 //     const a = 99;
 // }
 
 // // Desc: Legal Shadowing
-
 
 // const a = 10;
 // {
@@ -490,7 +455,6 @@
 // // Output:
 // // 30
 
-
 // const a = 10;
 // {
 //     const a = 20;
@@ -503,7 +467,6 @@
 // // Output:
 // // 20
 
-
 // const a = 10;
 // {
 //     const a = 20;
@@ -515,3 +478,104 @@
 // // Output:
 // // 20
 
+///////////////////////////   Closures   //////////////////////////////////
+
+// function a() {
+// 	var b = 7;
+// 	function c() {
+// 		console.log(b);
+// 	}
+// 	c();
+// }
+// a();
+
+// // Output:
+// // 7
+
+// function a() {
+//     c();
+// 	var b = 7;
+// 	function c() {
+// 		console.log(b);
+// 	}
+// }
+// a();
+
+// // Output:
+// // undefined
+
+// function a() {
+// 	var b = 7;
+// 	function c() {
+// 		console.log(b);
+// 	}
+// 	return c;
+// }
+// var d = a();
+// d();
+
+// // Output:
+// // 7
+
+// function d() {
+//     var e = 14;
+//   function a() {
+//     var b = 7;
+//     function c() {
+//       console.log(b, e);
+//     }
+//     c();
+//   }
+//   a();
+// }
+// d();
+
+// // Output:
+// // 7 14
+
+// function d() {
+//     var e = 14;
+//   function a() {
+//     var b = 7;
+//     return function c() {
+//       console.log(b, e);
+//     }
+//   }
+//   a()();
+// }
+// d();
+
+// // Output:
+// // 7 14
+
+
+// function d() {
+//   var e = 14;
+//   function a() {
+//     var e = 7;
+//     return function c() {
+//       console.log(e);
+//     };
+//   }
+//   a()();
+// }
+// d();
+
+// // Output:
+// // 7
+
+
+function d() {
+    let e = 14;
+    function a() {
+      let e = 7;
+      return function c() {
+        console.log(e);
+      };
+    }
+    a()();
+  }
+  d();
+  
+  // // Output:
+  // // 7
