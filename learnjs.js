@@ -548,7 +548,6 @@
 // // Output:
 // // 7 14
 
-
 // function d() {
 //   var e = 14;
 //   function a() {
@@ -564,18 +563,109 @@
 // // Output:
 // // 7
 
+// function d() {
+//     let e = 14;
+//     function a() {
+//       let e = 7;
+//       return function c() {
+//         console.log(e);
+//       };
+//     }
+//     a()();
+//   }
+//   d();
 
-function d() {
-    let e = 14;
-    function a() {
-      let e = 7;
-      return function c() {
-        console.log(e);
-      };
+// // Output:
+// // 7
+
+//////////////////////////////////   setTimeout and Closures   //////////////////////////////////
+
+//   function a() {
+//     var b = 10;
+//     setTimeout(() => {
+//         console.log(b);
+//     }, 3000);
+//   }
+//   a();
+
+// //   Output:
+// //   10
+
+// function a() {
+//   var b = 10;
+//   setTimeout(() => {
+//     console.log(b);
+//   }, 3000);
+//   b = 100;
+// }
+// a();
+
+// //   Output:
+// //   100
+
+// - setTimeout will takes callback function (along with the reference to the surrounding scope/env that forms a closure) and stores it into some place (event loop or callback queue) and attaches a timer to it and JS proceedes to the next line, once the timer expires JS takes that callback function puts it back to the call stack and runs it.
+
+// - setTimeout callback function forms a closure, this callback function remembers reference to outer environment and forms a closure and takes along with it whereever it goes.
+
+// Q. Need to print (1, 2, 3, 4, 5) after every second.
+
+// function a() {
+//   for (var i = 1; i <= 5; i++) {
+//     setTimeout(() => {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// a();
+
+// //   Output:
+// //   6
+// //   6
+// //   6
+// //   6
+// //   6
+
+// Q. Why the above code behaves like this?
+// A. Because every callback function of setTimeout refer to the same surrounding envirenment. By the time any timer expires value of i becomes 6. As we know JS doesn't wait it will continue to execute the loop and in each loop a callback function (along with lexical scope) is stored in a place and timer is attached. Once any timer finishes, it prints the value of i (that is 6 because before executing an callback value became 6) as this callback function has a reference to the lexical scope.
+
+// An easy and quick fix is to declare i with let, as let has a block scope, so for each iteration, i is a new copy altogether. So when a callback function is stored a new copy of i is stored with it meaning referring to a different memory location.
+// Var has a gobal scope, hence it updates the original copy.
+
+// function a() {
+//   for (let i = 1; i <= 5; i++) {
+//     setTimeout(() => {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// a();
+
+// //   Output:
+// //   1
+// //   2
+// //   3
+// //   4
+// //   5
+
+// Q) What if interviewer ask to not to use let?
+// - Closures will help
+// - With below, every time a new copy is supplied to callback because now a close function a separate function that gets created in every loop meaning every callback function points to different copy.
+
+function a() {
+  for (var i = 1; i <= 5; i++) {
+    function close(c) {
+      setTimeout(() => {
+        console.log(c);
+      }, c * 1000);
     }
-    a()();
+    close(i);
   }
-  d();
-  
-  // // Output:
-  // // 7
+}
+a();
+
+// //   Output:
+// //   1
+// //   2
+// //   3
+// //   4
+// //   5
