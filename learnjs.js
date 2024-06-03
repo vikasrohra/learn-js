@@ -651,17 +651,17 @@
 // - Closures will help
 // - With below, every time a new copy is supplied to callback because now a close function a separate function that gets created in every loop meaning every callback function points to different copy.
 
-function a() {
-  for (var i = 1; i <= 5; i++) {
-    function close(c) {
-      setTimeout(() => {
-        console.log(c);
-      }, c * 1000);
-    }
-    close(i);
-  }
-}
-a();
+// function a() {
+//   for (var i = 1; i <= 5; i++) {
+//     function close(c) {
+//       setTimeout(() => {
+//         console.log(c);
+//       }, c * 1000);
+//     }
+//     close(i);
+//   }
+// }
+// a();
 
 // //   Output:
 // //   1
@@ -669,3 +669,98 @@ a();
 // //   3
 // //   4
 // //   5
+
+//////////////////////// Functions ////////////////////////////
+
+// Function Statement OR Function Declaration 
+// a();
+// function a() {
+//     console.log('a is called');
+// }
+
+// // Output: 
+// // a is called
+
+
+// Function Expression
+// b();
+// var b = function() {
+//     console.log('b is called');
+// }
+
+// // Output: 
+// // Uncaught TypeError: b is not a function
+
+
+// Anonymous Functions
+// function () {
+//     console.log("Namaste");
+// }
+
+// // Output:
+// // Uncaught SyntaxError: Function statements require a function name
+
+
+// Named Function Expression
+// var b = function xyz() {
+//     console.log('b is called');
+// }
+// b();
+
+// // Output: 
+// // b is called
+
+
+// var b = function xyz() {
+//     console.log('b is called');
+// }
+// b();
+// xyz();
+
+// // Output: 
+// // b is called
+// // Uncaught ReferenceError: b is not defined
+
+
+// var b = function xyz() {
+//     console.log(xyz);
+// }
+// b();
+// xyz();
+
+// // Output: 
+// // b is called
+// // f xyz {
+	// // console.log(xyz);
+// // }
+// // Uncaught ReferenceError: b is not defined
+
+
+// Difference between Parameters and Arguments
+
+// function sum(a, b) { // here a and b are parameters
+//     return a+b;
+// }
+// sum(2, 3); // here 2 and 3 are arguments
+
+
+//  First Class Functions / Functions are First Class Citizens
+ // - THe ability to use functions as values, that can be passed as arguments to another functions and can be returned from the functions is called First Class Functions.
+ 
+//  var a = function (param1) {
+// 	return function () {};
+//  }
+ 
+//  var b = function (param1) {
+// 	return function xyz() {};
+//  }
+ 
+//  a();
+//  b();
+ 
+// //  Output: 
+// //  f () {
+// //  }
+ 
+// //  f xyz () {
+// //  }
