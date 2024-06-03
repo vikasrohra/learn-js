@@ -672,15 +672,14 @@
 
 //////////////////////// Functions ////////////////////////////
 
-// Function Statement OR Function Declaration 
+// Function Statement OR Function Declaration
 // a();
 // function a() {
 //     console.log('a is called');
 // }
 
-// // Output: 
+// // Output:
 // // a is called
-
 
 // Function Expression
 // b();
@@ -688,9 +687,8 @@
 //     console.log('b is called');
 // }
 
-// // Output: 
+// // Output:
 // // Uncaught TypeError: b is not a function
-
 
 // Anonymous Functions
 // function () {
@@ -700,16 +698,14 @@
 // // Output:
 // // Uncaught SyntaxError: Function statements require a function name
 
-
 // Named Function Expression
 // var b = function xyz() {
 //     console.log('b is called');
 // }
 // b();
 
-// // Output: 
+// // Output:
 // // b is called
-
 
 // var b = function xyz() {
 //     console.log('b is called');
@@ -717,10 +713,9 @@
 // b();
 // xyz();
 
-// // Output: 
+// // Output:
 // // b is called
 // // Uncaught ReferenceError: b is not defined
-
 
 // var b = function xyz() {
 //     console.log(xyz);
@@ -728,13 +723,12 @@
 // b();
 // xyz();
 
-// // Output: 
+// // Output:
 // // b is called
 // // f xyz {
-	// // console.log(xyz);
+// // console.log(xyz);
 // // }
 // // Uncaught ReferenceError: b is not defined
-
 
 // Difference between Parameters and Arguments
 
@@ -743,24 +737,64 @@
 // }
 // sum(2, 3); // here 2 and 3 are arguments
 
-
 //  First Class Functions / Functions are First Class Citizens
- // - THe ability to use functions as values, that can be passed as arguments to another functions and can be returned from the functions is called First Class Functions.
- 
+// - THe ability to use functions as values, that can be passed as arguments to another functions and can be returned from the functions is called First Class Functions.
+
 //  var a = function (param1) {
 // 	return function () {};
 //  }
- 
+
 //  var b = function (param1) {
 // 	return function xyz() {};
 //  }
- 
+
 //  a();
 //  b();
- 
-// //  Output: 
+
+// //  Output:
 // //  f () {
 // //  }
- 
+
 // //  f xyz () {
 // //  }
+
+///////////////// Callback /////////////////////////
+// setTimeout(functon() {
+// 	console.log('Timer');
+// }, 5000);
+
+// function a(b) {
+// 	console.log('a');
+// 	b();
+// }
+
+// a(function () {
+// 	console.log('b');
+// });
+
+// // Output:
+// // a
+// // b
+// // Timer (after 5 seconds)
+
+// Create a button and click on that button call an event
+// document.getElementById('clickMe').addEventListener('click', function xyz () {
+//     console.log('Clicked');
+// });
+
+// We need to count how many times a button is clicked
+// 0. one solution is to create a global variable and increment it on enery click
+// let count = 0;
+// document.getElementById('clickMe').addEventListener('click', function xyz () {
+//     console.log('Clicked ' + ++count);
+// });
+// But this is not a good way of doing it as we don't want to update the count from anywhere in the code
+
+// 1. To do so we have to create a closure
+function attachEventListeners() {
+  let count = 0;
+  document.getElementById("clickMe").addEventListener("click", function xyz() {
+    console.log("Clicked " + ++count);
+  });
+}
+attachEventListeners();
