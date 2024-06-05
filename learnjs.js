@@ -791,10 +791,49 @@
 // But this is not a good way of doing it as we don't want to update the count from anywhere in the code
 
 // 1. To do so we have to create a closure
-function attachEventListeners() {
-  let count = 0;
-  document.getElementById("clickMe").addEventListener("click", function xyz() {
-    console.log("Clicked " + ++count);
-  });
-}
-attachEventListeners();
+// function attachEventListeners() {
+//   let count = 0;
+//   document.getElementById("clickMe").addEventListener("click", function xyz() {
+//     console.log("Clicked " + ++count);
+//   });
+// }
+// attachEventListeners();
+
+
+
+
+////////////////////////  TRUST ISSUES WITH setTimeout()  //////////////////////////////////
+// console.log("START");
+
+// setTimeout(function cb() {
+// 	console.log("CALLBACK");
+// }, 5000);
+
+// let startDate = new Date().getTime();
+// let endDate = startDate;
+// while(endDate < startDate + 10000) { // Block the thread for 10 secs
+// 	endDate = new Date().getTime();
+// }
+
+// console.log("WHILE EXPIRES");
+
+// // Output: 
+// // START
+// // WHILE EXPIRES
+// // CALLBACK (after 10 secs as main thread (callstack) was blocked by GEC)
+
+
+// console.log("START");
+
+// setTimeout(function cb() {
+// 	console.log("CALLBACK");
+// }, 0);
+
+// console.log("END");
+
+// // Output: 
+// // START
+// // END
+// // CALLBACK 
+
+// // Because callback function will first placed into the webapi environment with it's timer, then immediately moved to callstack queue as timer is 0, event loop will observe the call stack and queue, if stack is empty only then it move the callback function.
