@@ -837,3 +837,160 @@
 // // CALLBACK 
 
 // // Because callback function will first placed into the webapi environment with it's timer, then immediately moved to callstack queue as timer is 0, event loop will observe the call stack and queue, if stack is empty only then it move the callback function.
+
+
+
+
+//////////////////////////////////////////////     Higher Order Functions & How to approach in interviews     //////////////////////////////////
+
+
+
+// Q. Given am array of radius of circles, you need to find area of each circle. [3, 1, 2, 4]
+// A. 
+// const radius = [3, 1, 2, 4];
+
+// const calculateArea = function (radius) {
+// 	const output = [];
+// 	for(let i = 0; i < radius.length; i++) {
+// 		output.push(Math.PI * radius[i] * radius[i]);
+// 	}
+// 	return output;
+// }
+
+// console.log(calculateArea(radius));
+
+
+
+// Q. How with radius, you need to calculate diameter and circumference
+// A.
+// const radius = [3, 1, 2, 4];
+
+// const calculateArea = function (radius) {
+// 	const output = [];
+// 	for(let i = 0; i < radius.length; i++) {
+// 		output.push(Math.PI * radius[i] * radius[i]);
+// 	}
+// 	return output;
+// }
+
+// console.log(calculateArea(radius));
+
+// const calculateCircumference = function (radius) {
+// 	const output = [];
+// 	for(let i = 0; i < radius.length; i++) {
+// 		output.push(2 * Math.PI * radius[i]);
+// 	}
+// 	return output;
+// }
+
+// console.log(calculateCircumference(radius));
+
+// const calculateDiameter = function (radius) {
+// 	const output = [];
+// 	for(let i = 0; i < radius.length; i++) {
+// 		output.push(2 * radius[i]);
+// 	}
+// 	return output;
+// }
+
+// console.log(calculateDiameter(radius));
+
+
+
+
+// // NOTE: We can observe here is we are repeating the code here. We must follow DRY (Don't Repeat Yourself) Principle
+
+
+// // - Now we can clearly see code is repeating in all the functions and in every function there is a for loop hence not optimized.
+// // - So the issues with above code is,
+// // 	0. Repeatitive Code
+// // 	1. Not optimized code
+// // 	2. Function is not doing a single task
+// // - So to optimize this we can clearly see in every function only formula is changing rest everything is same so we can think to outsource this formula and pass as an argument to a function as below
+
+// const radius = [3, 1, 2, 4];
+
+// const area = function(radius) {
+// 	return Math.PI * radius * raduis;
+// }
+
+// const circumference = function(radius) {
+// 	return 2 * Math.PI * radius;
+// }
+
+// const diameter = function(radius) {
+// 	return 2 * radius;
+// }
+
+// const calculate = function(radius, logic) { // calculate here is HOC and logic is callback function
+// 	const output = [];
+// 	for(let i = 0; i < radius.length; i++) {
+// 		output.push(logic(radius[i]));
+// 	}
+	
+// 	return output;
+// }
+
+// console.log(calculate(radius, area));
+// console.log(calculate(radius, circumference));
+// console.log(calculate(radius, diameter));
+
+
+// // NOTE:
+// // The above code is,
+// // 0. Resuable, calculate() is used to calculate all the required areas
+// // 1. Optimized
+// // 2. Every function is doing a single task
+
+// // Observation:
+// // calculate() is the partial implementation of map, hence code can be changed to below code
+
+// const radius = [3, 1, 2, 4];
+
+// const area = function(radius) {
+// 	return Math.PI * radius * raduis;
+// }
+
+// const circumference = function(radius) {
+// 	return 2 * Math.PI * radius;
+// }
+
+// const diameter = function(radius) {
+// 	return 2 * radius;
+// }
+
+// console.log(radius.map(area)); // similar to radius.map(r => area(r));
+// console.log(radius.map(circumference));
+// console.log(radius.map(diameter));
+
+
+//// Complete implementation of map
+
+
+// const radius = [3, 1, 2, 4];
+
+// const area = function(radius) {
+// 	return Math.PI * radius * raduis;
+// }
+
+// const circumference = function(radius) {
+// 	return 2 * Math.PI * radius;
+// }
+
+// const diameter = function(radius) {
+// 	return 2 * radius;
+// }
+
+// Array.prototype.calculate = function(logic) { // calculate here is HOC and logic is callback function
+// 	const output = [];
+// 	for(let i = 0; i < this.length; i++) {
+// 		output.push(logic(this[i]));
+// 	}
+	
+// 	return output;
+// }
+
+
+// console.log(radius.calculate(area));
+// console.log(radius.calculate(circumference));
+// console.log(radius.calculate(diameter));
