@@ -994,3 +994,130 @@
 // console.log(radius.calculate(area));
 // console.log(radius.calculate(circumference));
 // console.log(radius.calculate(diameter));
+
+
+//////////////////// MAP, FILTER & REDUCE /////////////////////////////////
+
+// // Find even and odd numbers. [5, 1, 3, 2, 6]
+
+// // 0. MAP
+
+// const arr = [5, 1, 3, 2, 6];
+
+// // Double - [10, 2, 6, 4, 12];
+// // Triple - [15, 3, 9, 6, 18];
+// // Binary - ["101", "1", "11", "10", "110"];
+
+// function double(x) {
+// 	return x * 2;
+// }
+
+// console.log(arr.map(double));
+// console.log(arr.map(function triple(x) {
+// 	return x * 3;
+// }));
+// console.log(arr.map(x => x.toString(2)));
+
+
+
+// // 1. FILTER
+
+// const arr = [5, 1, 3, 2, 6];
+
+// function isOdd() {
+// 	return x % 2;
+// }
+
+// console.log(arr.filter(isOdd)); // Odd
+
+// console.log(arr.filter(x => x % 2 === 0)); // Even
+
+
+// // 2. REDUCE
+// // - It will take all the element of the array and come up with a single value out of them, meaning, it will iterate over all the elements of the array and generate a single value out of it.
+// // - Example questions:
+// // 	0. Find out sum of all the elements inside the array
+// // 	1. Find out smallest/largest element of the array
+
+// // Q. Find out sum of all the elements inside the array
+
+// // 0. Using for loop
+
+// const arr = [5, 1, 3, 2, 6];
+// function sumOfArr(arr) {
+// 	let sum = 0;
+// 	for(let i = 0; i < arr.length; i++) {
+// 		sum += arr[i];
+// 	}
+	
+// 	return sum;
+// }
+// sumOfArr(arr);
+
+// // 1. Using REDUCE
+
+// const arr = [5, 1, 3, 2, 6];
+// const sum = arr.reduce((acc, curr) => {
+// 	acc += curr;
+	
+// 	return acc;
+// }, 0); // "First argument" is a "function" that has 2 arguments, "acc" is the accumulator that accumulates the result in each iteration like sum, "curr" is the current element value in the iteration like arr[i], "Second argument" is the initial value of the accumulator
+// console.log(sum);
+
+
+// // Q. Find out max in the array
+
+// // 0. Using for loop
+
+// const arr = [5, 1, 3, 2, 6];
+// function maxInArr(arr) {
+// 	let max = 0;
+// 	for(let i = 0; i < arr.length; i++) {
+// 		if(arr[i] > max) {
+// 			max = arr[i];
+// 		}
+// 	}
+	
+// 	return max;
+// }
+// maxInArr(arr);
+
+// // 1. Using REDUCE
+
+// const arr = [5, 1, 3, 2, 6];
+// const maxNum = arr.reduce((max, curr) => {
+// 	if(curr > max) {
+// 		max = curr;
+// 	}
+// 	return max;
+// }, 0); // "First argument" is a "function" that has 2 arguments, "acc" is the accumulator that accumulates the result in each iteration like sum, "curr" is the current element value in the iteration like arr[i], "Second argument" is the initial value of the accumulator
+// console.log(maxNum);
+
+
+// // **Tricky scenario where REDUCE can help**
+// // - We have a list of uers
+// const users = [
+// {firstName: 'Vikas', lastName: 'Rohra', age: 30},
+// {firstName: 'Donald', lastName: 'Trumph', age: 75},
+// {firstName: 'Elon', lastName: 'Musk', age: 50},
+// {firstName: 'Deepika', lastName: 'Padukone', age: 30}
+// ];
+// // - we need to return an object where key is age and value is count of the simalar ages.
+// // {30: 2, 75: 1, 50: 1}
+// // - Observation is we need to return a single object, if we have a list of objects and we need to return a single object that is a case where we can use REDUCE
+
+// const output = users.reduce((acc, curr) => {
+// 	if(acc[curr.age]) {
+// 		acc[curr.age] += 1;
+// 	}
+// 	else {
+// 		acc[curr.age] = 1;
+// 	}
+// 	return acc;
+// }, {});
+
+// console.log(output);
+
+
+
+
