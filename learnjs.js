@@ -1093,10 +1093,7 @@
 
 // console.log(output);
 
-
 //////////////////////  Promises /////////////////////////////////////////////
-
-
 
 // const GITHUB_URL = "https://api.github.com/users/vikasrohra";
 
@@ -1107,8 +1104,6 @@
 // user.then(function(data) {
 //     console.log(data);
 // });
-
-
 
 // //  Promise with success callback
 
@@ -1147,8 +1142,6 @@
 // function isCartValid(cart) {
 //   return true;
 // }
-
-
 
 // //  Promise with failure callback
 
@@ -1189,9 +1182,6 @@
 // function isCartValid(cart) {
 //   return false;
 // }
-
-
-
 
 // //  Promise chaining
 
@@ -1248,9 +1238,6 @@
 
 // // NOTE: In the above promise chaining code, if any promise fails it fails the entire chain, meaning catch is applicable for all the promises above it. If we want a scenario where weather create order is successful or not we have call preceed to payment api, then shift catch above to proceed to payment and below the create order then catch will only be aplicable for create order
 
-
-
-
 // //  Promise chaining with calling proceed to payment always weather create order fails/success
 
 // // Promise Consumer
@@ -1268,7 +1255,7 @@
 //   })
 //   .then((paymentInfo) => {
 //     console.log(paymentInfo);
-//   });  
+//   });
 
 // // Promise Producer
 
@@ -1303,3 +1290,288 @@
 //     resolve("Payment Successful");
 //   });
 // }
+
+////////////////////////////  Promise APis - Promise.all, Promise,allSettled, Promise.race and Promise.any  ///////////////////////////
+
+// // 0.0 Promise.all all success
+
+// const p1 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("P1 resolved");
+//   }, 3000);
+// });
+
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("P2 resolved");
+//   }, 1000);
+// });
+
+// const p3 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("P3 resolved");
+//   }, 2000);
+// });
+
+// Promise.all([p1, p2, p3]).then((res) => console.log(res));
+
+// // Output:
+// // After 3 seconds prints
+// // ['P1 resolved', 'P2 resolved', 'P3 resolved']
+
+// // 0.1 Promise.all with one fail
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("P2 rejected");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.all([p1, p2, p3]).then((res) => console.log(res));
+
+//   // Output:
+//   // After 1 second prints
+//   // Uncaught (in promise) P2 rejected
+
+//   // Uncaught because we have not handled this error
+
+// // 0.2 With error handling
+
+// const p1 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("P1 resolved");
+//   }, 3000);
+// });
+
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject("P2 rejected");
+//   }, 1000);
+// });
+
+// const p3 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("P3 resolved");
+//   }, 2000);
+// });
+
+// Promise.all([p1, p2, p3])
+//   .then((res) => console.log(res))
+//   .catch((err) => console.error(err));
+
+// // Output:
+// // After 1 second prints
+// // P2 rejected
+
+// // 1.0 Promise.allSettled all success
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P2 resolved");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.allSettled([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 3 seconds prints
+//   // [{status: 'fulfilled', value: 'P1 resolved'}, {status: 'fulfilled', value: 'P2 resolved'}, {status: 'fulfilled', value: 'P3 resolved'}]
+
+//   // 1.1 Promise.allSettled one fail
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("P2 rejected");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.allSettled([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 3 seconds prints
+//   // [{status: 'fulfilled', value: 'P1 resolved'}, {status: "rejected", value: 'P2 rejected'}, {status: 'fulfilled', value: 'P3 resolved'}]
+
+// // 2.0 Promise.race all success
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P2 resolved");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.race([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 1 seconds prints
+//   // P2 resolved
+
+// // 2.1 Promise.race one fail
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("P2 rejected");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.race([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 1 seconds prints
+//   // P2 rejected
+
+// // 3.0 Promise.any all success
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P2 resolved");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.any([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 1 second prints
+//   // P2 resolved
+
+// // 3.1 Promise.any one fail
+
+// const p1 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("P1 resolved");
+//     }, 3000);
+//   });
+
+//   const p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("P2 rejected");
+//     }, 1000);
+//   });
+
+//   const p3 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve("P3 resolved");
+//     }, 2000);
+//   });
+
+//   Promise.any([p1, p2, p3])
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err));
+
+//   // Output:
+//   // After 2 seconds prints
+//   // P3 resolved
+
+
+// // 3.2 Promise.any all fail
+
+// const p1 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject("P1 rejected");
+//   }, 3000);
+// });
+
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject("P2 rejected");
+//   }, 1000);
+// });
+
+// const p3 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject("P3 rejected");
+//   }, 2000);
+// });
+
+// Promise.any([p1, p2, p3])
+//   .then((res) => console.log(res))
+//   .catch((err) => {
+//     console.error(err);
+//     console.log(err.errors);
+//   });
+
+// // Output:
+// // After 3 seconds prints
+// // AggregateError: All promises were rejected
+// // ['P1 rejected', 'P2 rejected', 'P3 rejected']
