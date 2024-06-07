@@ -799,9 +799,6 @@
 // }
 // attachEventListeners();
 
-
-
-
 ////////////////////////  TRUST ISSUES WITH setTimeout()  //////////////////////////////////
 // console.log("START");
 
@@ -817,11 +814,10 @@
 
 // console.log("WHILE EXPIRES");
 
-// // Output: 
+// // Output:
 // // START
 // // WHILE EXPIRES
 // // CALLBACK (after 10 secs as main thread (callstack) was blocked by GEC)
-
 
 // console.log("START");
 
@@ -831,22 +827,17 @@
 
 // console.log("END");
 
-// // Output: 
+// // Output:
 // // START
 // // END
-// // CALLBACK 
+// // CALLBACK
 
 // // Because callback function will first placed into the webapi environment with it's timer, then immediately moved to callstack queue as timer is 0, event loop will observe the call stack and queue, if stack is empty only then it move the callback function.
 
-
-
-
 //////////////////////////////////////////////     Higher Order Functions & How to approach in interviews     //////////////////////////////////
 
-
-
 // Q. Given am array of radius of circles, you need to find area of each circle. [3, 1, 2, 4]
-// A. 
+// A.
 // const radius = [3, 1, 2, 4];
 
 // const calculateArea = function (radius) {
@@ -858,8 +849,6 @@
 // }
 
 // console.log(calculateArea(radius));
-
-
 
 // Q. How with radius, you need to calculate diameter and circumference
 // A.
@@ -895,11 +884,7 @@
 
 // console.log(calculateDiameter(radius));
 
-
-
-
 // // NOTE: We can observe here is we are repeating the code here. We must follow DRY (Don't Repeat Yourself) Principle
-
 
 // // - Now we can clearly see code is repeating in all the functions and in every function there is a for loop hence not optimized.
 // // - So the issues with above code is,
@@ -927,14 +912,13 @@
 // 	for(let i = 0; i < radius.length; i++) {
 // 		output.push(logic(radius[i]));
 // 	}
-	
+
 // 	return output;
 // }
 
 // console.log(calculate(radius, area));
 // console.log(calculate(radius, circumference));
 // console.log(calculate(radius, diameter));
-
 
 // // NOTE:
 // // The above code is,
@@ -963,9 +947,7 @@
 // console.log(radius.map(circumference));
 // console.log(radius.map(diameter));
 
-
 //// Complete implementation of map
-
 
 // const radius = [3, 1, 2, 4];
 
@@ -986,15 +968,13 @@
 // 	for(let i = 0; i < this.length; i++) {
 // 		output.push(logic(this[i]));
 // 	}
-	
+
 // 	return output;
 // }
-
 
 // console.log(radius.calculate(area));
 // console.log(radius.calculate(circumference));
 // console.log(radius.calculate(diameter));
-
 
 //////////////////// MAP, FILTER & REDUCE /////////////////////////////////
 
@@ -1018,8 +998,6 @@
 // }));
 // console.log(arr.map(x => x.toString(2)));
 
-
-
 // // 1. FILTER
 
 // const arr = [5, 1, 3, 2, 6];
@@ -1031,7 +1009,6 @@
 // console.log(arr.filter(isOdd)); // Odd
 
 // console.log(arr.filter(x => x % 2 === 0)); // Even
-
 
 // // 2. REDUCE
 // // - It will take all the element of the array and come up with a single value out of them, meaning, it will iterate over all the elements of the array and generate a single value out of it.
@@ -1049,7 +1026,7 @@
 // 	for(let i = 0; i < arr.length; i++) {
 // 		sum += arr[i];
 // 	}
-	
+
 // 	return sum;
 // }
 // sumOfArr(arr);
@@ -1059,11 +1036,10 @@
 // const arr = [5, 1, 3, 2, 6];
 // const sum = arr.reduce((acc, curr) => {
 // 	acc += curr;
-	
+
 // 	return acc;
 // }, 0); // "First argument" is a "function" that has 2 arguments, "acc" is the accumulator that accumulates the result in each iteration like sum, "curr" is the current element value in the iteration like arr[i], "Second argument" is the initial value of the accumulator
 // console.log(sum);
-
 
 // // Q. Find out max in the array
 
@@ -1077,7 +1053,7 @@
 // 			max = arr[i];
 // 		}
 // 	}
-	
+
 // 	return max;
 // }
 // maxInArr(arr);
@@ -1092,7 +1068,6 @@
 // 	return max;
 // }, 0); // "First argument" is a "function" that has 2 arguments, "acc" is the accumulator that accumulates the result in each iteration like sum, "curr" is the current element value in the iteration like arr[i], "Second argument" is the initial value of the accumulator
 // console.log(maxNum);
-
 
 // // **Tricky scenario where REDUCE can help**
 // // - We have a list of uers
@@ -1119,5 +1094,212 @@
 // console.log(output);
 
 
+//////////////////////  Promises /////////////////////////////////////////////
 
 
+
+// const GITHUB_URL = "https://api.github.com/users/vikasrohra";
+
+// const user = fetch(GITHUB_URL); // fetch is a JS api to call api calls
+
+// console.log(user);
+
+// user.then(function(data) {
+//     console.log(data);
+// });
+
+
+
+// //  Promise with success callback
+
+// // Promise Consumer
+
+// const cart = ["Shirt", "Jeans", "Shoes"];
+
+// const promise = createOrder(cart);
+
+// promise.then((orderId) => console.log(orderId));
+
+// // Promise Producer
+
+// function createOrder(cart) {
+//   const pr = new Promise(function (resolve, reject) {
+//     // Validate the cart
+//     if (!isCartValid(cart)) {
+//       const err = new Error("Cart is not valid");
+//       reject(err);
+//     }
+
+//     // Logic/API call to save cart details
+//     const orderId = "1234";
+
+//     // return orderId
+//     if (orderId) {
+//       setTimeout(function () {
+//         resolve(orderId);
+//       }, 5000);
+//     }
+//   });
+
+//   return pr;
+// }
+
+// function isCartValid(cart) {
+//   return true;
+// }
+
+
+
+// //  Promise with failure callback
+
+// // Promise Consumer
+
+// const cart = ["Shirt", "Jeans", "Shoes"];
+
+// const promise = createOrder(cart);
+
+// promise
+//   .then((orderId) => console.log(orderId))
+//   .catch((err) => console.log(err.message));
+
+// // Promise Producer
+
+// function createOrder(cart) {
+//   const pr = new Promise(function (resolve, reject) {
+//     // Validate the cart
+//     if (!isCartValid(cart)) {
+//       const err = new Error("Cart is not valid");
+//       reject(err);
+//     }
+
+//     // Logic/API call to save cart details
+//     const orderId = "1234";
+
+//     // return orderId
+//     if (orderId) {
+//       setTimeout(function () {
+//         resolve(orderId);
+//       }, 5000);
+//     }
+//   });
+
+//   return pr;
+// }
+
+// function isCartValid(cart) {
+//   return false;
+// }
+
+
+
+
+// //  Promise chaining
+
+// // Promise Consumer
+
+// const cart = ["Shirt", "Jeans", "Shoes"];
+
+// createOrder(cart)
+//   .then((orderId) => {
+//     console.log(orderId);
+//     return orderId;
+//   })
+//   .then((orderId) => {
+//     return proceedToPayment(orderId);
+//   })
+//   .then((paymentInfo) => {
+//     console.log(paymentInfo);
+//   })
+//   .catch((err) => console.log(err.message));
+
+// // Promise Producer
+
+// function createOrder(cart) {
+//   const pr = new Promise(function (resolve, reject) {
+//     // Validate the cart
+//     if (!isCartValid(cart)) {
+//       const err = new Error("Cart is not valid");
+//       reject(err);
+//     }
+
+//     // Logic/API call to save cart details
+//     const orderId = "1234";
+
+//     // return orderId
+//     if (orderId) {
+//       setTimeout(function () {
+//         resolve(orderId);
+//       }, 5000);
+//     }
+//   });
+
+//   return pr;
+// }
+
+// function isCartValid(cart) {
+//   return true;
+// }
+
+// function proceedToPayment() {
+//   return new Promise(function (resolve, reject) {
+//     resolve("Payment Successful");
+//   });
+// }
+
+// // NOTE: In the above promise chaining code, if any promise fails it fails the entire chain, meaning catch is applicable for all the promises above it. If we want a scenario where weather create order is successful or not we have call preceed to payment api, then shift catch above to proceed to payment and below the create order then catch will only be aplicable for create order
+
+
+
+
+// //  Promise chaining with calling proceed to payment always weather create order fails/success
+
+// // Promise Consumer
+
+// const cart = ["Shirt", "Jeans", "Shoes"];
+
+// createOrder(cart)
+//   .then((orderId) => {
+//     console.log(orderId);
+//     return orderId;
+//   })
+//   .catch((err) => console.log(err.message))
+//   .then((orderId) => {
+//     return proceedToPayment(orderId);
+//   })
+//   .then((paymentInfo) => {
+//     console.log(paymentInfo);
+//   });  
+
+// // Promise Producer
+
+// function createOrder(cart) {
+//   const pr = new Promise(function (resolve, reject) {
+//     // Validate the cart
+//     if (!isCartValid(cart)) {
+//       const err = new Error("Cart is not valid");
+//       reject(err);
+//     }
+
+//     // Logic/API call to save cart details
+//     const orderId = "1234";
+
+//     // return orderId
+//     if (orderId) {
+//       setTimeout(function () {
+//         resolve(orderId);
+//       }, 5000);
+//     }
+//   });
+
+//   return pr;
+// }
+
+// function isCartValid(cart) {
+//   return false;
+// }
+
+// function proceedToPayment() {
+//   return new Promise(function (resolve, reject) {
+//     resolve("Payment Successful");
+//   });
+// }
