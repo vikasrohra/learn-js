@@ -1794,3 +1794,105 @@
 
 // // Output:
 // // TypeError: Failed to fetch
+
+
+
+/////////////////////////////  this keyword  ////////////////////////////////////
+
+
+"use strict"
+
+// //  0. this keyword in global space
+
+// console.log(this);
+
+
+// //  1. this keyword in functional space
+
+// function a() {
+//     // the value of this depends on strict / non-strict mode
+//     console.log(this); // undefined in strict mode, window in non-strict mode
+// }
+// a();
+
+
+// // The value of this keywork also depends on how you call the fucntion
+
+// function a() {
+//     // the value of this depends on strict / non-strict mode
+//     console.log(this); // undefined in strict mode, window in non-strict mode
+// }
+// a(); // undefined
+// window.a(); // window
+
+
+// // 2. this keyword inside object's method
+
+// const obj = {
+//     a: 10,
+//     x: function() {
+//         console.log(this);
+//     }
+// };
+
+// obj.x(); // {a: 10, x: f}
+
+
+// // Call apply and bind methods for sharing methods
+
+// const student1 = {
+//     name: 'Vikas',
+//     printName: function() {
+//         console.log(this);
+//     }
+// };
+
+// student1.printName(); // {name: 'Vikas', printName: ƒ}
+
+
+// const student2 = {
+//     name: 'Sakiv'
+// };
+
+// student1.printName(student2); // {name: 'Vikas', printName: ƒ}
+
+// student1.printName.call(student2); // {name: 'Sakiv'}, here we are changing where this keyword refer to, in this case we are saying to point it to student2 object
+
+
+
+// // 3. this keyword inside arrow function
+// // Arrow functions donot have their own this keyword, they take the value of their lexical envirenment where they are enclosed
+
+// const student1 = {
+//     name: 'Vikas',
+//     printName: () => {
+//         console.log(this);
+//     }
+// };
+
+// student1.printName(); // window
+
+// // Becuase arrow functions this keyword to it's lexical environment in which they are enclosed
+
+// const student1 = {
+//     name: 'Vikas',
+//     printName: function() {
+//        const y = () => {
+//         console.log(this);
+//        }
+//        y();
+//     }
+// };
+
+// student1.printName(); // {name: 'Vikas', printName: ƒ}
+
+// // Becuase arrow functions this keyword to it's lexical environment in which they are enclosed, mehod y is an arrow function it's this will point to outer env, outer env's this point to the student1 object
+
+
+// // 4. this keyword inside DOM
+
+// on click of Click Me button it refers to that button [object HTMLButtonElement]
+
+
+
+// // 5. this keyword inside classes, constructors ?
