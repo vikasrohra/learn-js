@@ -1543,7 +1543,6 @@
 //   // After 2 seconds prints
 //   // P3 resolved
 
-
 // // 3.2 Promise.any all fail
 
 // const p1 = new Promise((resolve, reject) => {
@@ -1575,3 +1574,223 @@
 // // After 3 seconds prints
 // // AggregateError: All promises were rejected
 // // ['P1 rejected', 'P2 rejected', 'P3 rejected']
+
+///////////////////////////////////////  async-await  ///////////////////////////////////////////
+
+// const p = new Promise((resolve, reject) => resolve("Namaste"));
+
+// async function getData() {
+//   return p;
+// }
+
+// const promiseData = getData();
+// promiseData.then((res) => console.log(res));
+
+// // Output:
+// // Namaste
+
+// async function getData() {
+//   return "Namaste";
+// }
+
+// const promiseData = getData();
+// promiseData.then((res) => console.log(res));
+
+// // Output:
+// // Namaste
+
+// async function getData() {
+//   console.log("Namaste");
+// }
+
+// const promiseData = getData();
+// promiseData.then((res) => console.log(res));
+
+// // Output:
+// // Namaste
+// // undefined
+
+// // How promises were handled before async-await
+
+// const p = new Promise((resolve, reject) => resolve("Namaste"));
+
+//  function getData() {
+// 	p.then(res => console.log(res));
+//  }
+//  getData();
+
+// // Output:
+// // Namaste
+
+// // Handling promises using async-await
+
+// const p = new Promise((resolve, reject) => resolve("Namaste"));
+
+// async function handlePromise() {
+//   const val = await p;
+//   console.log(val);
+// }
+// handlePromise();
+
+// // Output:
+// // Namaste
+
+// // What is difference between handling promises using normal way vs using async-await?
+
+// // Normal way
+
+// const p = new Promise((resolve, reject) => {
+//   setTimeout(() => resolve("Namaste"), 10000);
+// });
+
+// function getData() {
+//   p.then((res) => console.log(res));
+//   console.log("I will not wait for the promise to resolve");
+// }
+// getData();
+
+// // Output:
+// // I will not wait for the promise to resolve
+// // Namaste (after 10 secs)
+
+// // 0. In normal way, promise is put out of the normal thread and kept with the browser apis then once it gets resolved it moved to stack queue and through evenot loop it pushed back to the call stack after it gets empty, and we know JS doesn't wait for anyone, so it will execute the console statement without waiting for the promise to get resolved.
+
+// // using async-await
+
+//  const p = new Promise((resolve, reject) => {
+//    setTimeout(() => resolve("Namaste"), 10000);
+//  });
+
+//  async function getData() {
+// console.log("Hello World!");
+//    const res = await p;
+//    console.log("I will wait for the promise to get resolved");
+//    console.log(res);
+//  }
+//  getData();
+
+// // Output:
+// // Hello World!
+// // after 10 secs,
+// // I will wait for the promise to get resolved
+// // Namaste
+
+// // async function with 2 await statements that handles same promise
+
+//  const p = new Promise((resolve, reject) => {
+//     setTimeout(() => resolve("Namaste"), 10000);
+//   });
+
+//   async function getData() {
+// console.log("Hello World!");
+//     const res1 = await p;
+//     console.log("I will wait for the promise to get resolved 1");
+//     console.log(res1);
+
+//     const res2 = await p;
+//     console.log("I will wait for the promise to get resolved 2");
+//     console.log(res2);
+//   }
+//   getData();
+
+// // Output:
+// // Hello World!
+// // after 10 secs,
+// // I will wait for the promise to get resolved 1
+// // Namaste
+// // I will wait for the promise to get resolved 2
+// // Namaste
+
+// // async function with 2 await statements that handles different promises where p1 takes more time than p2
+
+// const p1 = new Promise((resolve, reject) => {
+//   setTimeout(() => resolve("Namaste 1"), 40000);
+// });
+
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => resolve("Namaste 2"), 20000);
+// });
+
+// async function getData() {
+//   console.log("Hello World!");
+//   const res1 = await p1;
+//   console.log("I will wait for the promise to get resolved 1");
+//   console.log(res1);
+
+//   const res2 = await p2;
+//   console.log("I will wait for the promise to get resolved 2");
+//   console.log(res2);
+// }
+// getData();
+
+// // Output:
+// // Hello World!
+// // after 10 secs,
+// // I will wait for the promise to get resolved 1
+// // Namaste 1
+// // I will wait for the promise to get resolved 2
+// // Namaste 2
+
+// // async function with 2 await statements that handles different promises where p1 takes less time than p2
+
+// const p1 = new Promise((resolve, reject) => {
+//   setTimeout(() => resolve("Namaste 1"), 5000);
+// });
+
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => resolve("Namaste 2"), 10000);
+// });
+
+// async function getData() {
+//   console.log("Hello World!");
+//   const res1 = await p1;
+//   console.log("I will wait for the promise to get resolved 1");
+//   console.log(res1);
+
+//   const res2 = await p2;
+//   console.log("I will wait for the promise to get resolved 2");
+//   console.log(res2);
+// }
+// getData();
+
+// // // Output:
+// // // Hello World!
+// // // after 5 secs,
+// // // I will wait for the promise to get resolved 1
+// // // Namaste 1
+// // // after 10 secs,
+// // // I will wait for the promise to get resolved 2
+// // // Namaste 2
+
+// // Get data using fetch with async-await with error handling
+
+// const API_URL = "https://api.github.com/users/vikasrohra";
+
+// const handlePromise = async function () {
+//   try {
+//     const data = await fetch(API_URL);
+//     const jsonVal = await data.json(); // fetch(API_URL).then(res => res.json()).then(res => console.log(res))
+//     console.log(jsonVal);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// handlePromise();
+
+// // Output:
+// // TypeError: Failed to fetch
+
+
+// As async functions returns promise, we can handle the errors in traditional way
+
+// const API_URL = "https://api.github.com/users/vikasrohra";
+
+// const handlePromise = async function () {
+//   const data = await fetch(API_URL);
+//   const jsonVal = await data.json(); // fetch(API_URL).then(res => res.json()).then(res => console.log(res))
+//   console.log(jsonVal);
+// };
+// handlePromise().catch((err) => console.log(err));
+
+// // Output:
+// // TypeError: Failed to fetch
