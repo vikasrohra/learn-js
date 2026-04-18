@@ -458,3 +458,544 @@ Render → Create function → Capture variables → Use later
 
 If something in React feels “stuck” or outdated →
 👉 It’s usually a **closure issue**
+
+
+# ⚛️ Advanced React Patterns with Closures
+
+Closures power some of the most important performance patterns in React:
+
+* `useMemo` → memoize **values**
+* `useCallback` → memoize **functions**
+* Memoization → avoid unnecessary work
+
+---
+
+## 🧠 Why This Matters
+
+Every render in React:
+
+* Recreates functions
+* Recomputes values
+
+Closures + memoization help:
+✅ Avoid unnecessary re-renders
+✅ Improve performance
+✅ Keep stable references
+
+---
+
+# 🧮 1. Memoization (useMemo)
+
+## ❌ Problem: Expensive Calculation Runs Every Render
+
+```jsx id="q4p7tw"
+function App() {
+  const [count, setCount] = useState(0);
+
+  const expensiveValue = slowFunction(count);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <p>{expensiveValue}</p>
+    </>
+  );
+}
+```
+
+👉 `slowFunction` runs on every render → wasteful
+
+---
+
+## ✅ Solution: useMemo
+
+```jsx id="rf0m8r"
+import { useMemo, useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const expensiveValue = useMemo(() => {
+    return slowFunction(count);
+  }, [count]);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <p>{expensiveValue}</p>
+    </>
+  );
+}
+```
+
+### 🔍 Explanation
+
+* `useMemo` stores the result
+* Recomputes **only when `count` changes**
+* Closure remembers previous value
+
+---
+
+## ⚠️ When NOT to use useMemo
+
+* Simple calculations
+* Premature optimization
+* When it adds complexity
+
+---
+
+# 🔁 2. useCallback (Memoizing Functions)
+
+## ❌ Problem: Function recreated every render
+
+```jsx id="cqsmlz"
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    console.log("Clicked");
+  }
+
+  return <Child onClick={handleClick} />;
+}
+```
+
+👉 `handleClick` is new every render
+👉 Child re-renders unnecessarily
+
+---
+
+## ✅ Solution: useCallback
+
+```jsx id="yg5zv7"
+import { useCallback, useState } from "react";
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    console.log("Clicked");
+  }, []);
+
+  return <Child onClick={handleClick} />;
+}
+```
+
+### 🔍 Explanation
+
+* `useCallback` memoizes the function
+* Returns the **same function reference**
+* Uses closure to retain scope
+
+---
+
+## 🧩 With React.memo
+
+```jsx id="b8px7j"
+const Child = React.memo(({ onClick }) => {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Click</button>;
+});
+```
+
+👉 Now child re-renders only when props change
+
+---
+
+# ⚡ 3. useMemo vs useCallback
+
+| Hook        | Purpose          | Returns  |
+| ----------- | ---------------- | -------- |
+| useMemo     | Memoize value    | value    |
+| useCallback | Memoize function | function |
+
+---
+
+## 🧠 Mental Model
+
+```text id="0e0f2t"
+useMemo     → caches result
+useCallback → caches function
+```
+
+---
+
+# 🔄 4. Closure + Dependency Trap
+
+```jsx id="1zcb6u"
+const handleClick = useCallback(() => {
+  console.log(count);
+}, []);
+```
+
+### ❌ Problem
+
+* Closure captures old `count`
+* Logs stale value
+
+---
+
+## ✅ Fix
+
+```jsx id="zv5z3l"
+const handleClick = useCallback(() => {
+  console.log(count);
+}, [count]);
+```
+
+👉 Always include dependencies
+
+---
+
+# 🏭 5. Real Pattern: Filtering List
+
+```jsx id="nq9c7s"
+function App({ items }) {
+  const [search, setSearch] = useState("");
+
+  const filteredItems = useMemo(() => {
+    return items.filter(item =>
+      item.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [items, search]);
+
+  return (
+    <>
+      <input onChange={(e) => setSearch(e.target.value)} />
+      <ul>
+        {filteredItems.map(item => <li key={item}>{item}</li>)}
+      </ul>
+    </>
+  );
+}
+```
+
+### 🔍 Why this matters
+
+* Filtering runs only when needed
+* Saves performance for large lists
+
+---
+
+# 🚀 6. Real Pattern: Stable Event Handler
+
+```jsx id="8w3g5l"
+const handleAdd = useCallback(() => {
+  setItems(prev => [...prev, "New Item"]);
+}, []);
+```
+
+### 🔍 Why this works
+
+* Uses functional update → avoids dependency issues
+* Closure safely handles state
+
+---
+
+# 🧩 Visual Flow
+
+```text id="yb6f6h"
+Render
+  ↓
+Create closure
+  ↓
+Memoize (useMemo/useCallback)
+  ↓
+Reuse previous value/function
+```
+
+---
+
+# 🏁 Key Takeaways
+
+* Closures power React hooks
+* `useMemo` → optimize values
+* `useCallback` → stabilize functions
+* Always manage dependencies correctly
+* Overusing these can hurt readability
+
+---
+
+# ⚠️ Golden Rule
+
+> Don’t optimize unless there’s a real performance problem.
+
+---
+
+# 📚 Summary
+
+* Closures + hooks = powerful patterns
+* Memoization avoids wasted work
+* Dependency arrays control behavior
+* Understanding closures = mastering React
+
+
+# ⚛️ Advanced React Patterns with Closures
+
+Closures power some of the most important performance patterns in React:
+
+* `useMemo` → memoize **values**
+* `useCallback` → memoize **functions**
+* Memoization → avoid unnecessary work
+
+---
+
+## 🧠 Why This Matters
+
+Every render in React:
+
+* Recreates functions
+* Recomputes values
+
+Closures + memoization help:
+✅ Avoid unnecessary re-renders
+✅ Improve performance
+✅ Keep stable references
+
+---
+
+# 🧮 1. Memoization (useMemo)
+
+## ❌ Problem: Expensive Calculation Runs Every Render
+
+```jsx id="q4p7tw"
+function App() {
+  const [count, setCount] = useState(0);
+
+  const expensiveValue = slowFunction(count);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <p>{expensiveValue}</p>
+    </>
+  );
+}
+```
+
+👉 `slowFunction` runs on every render → wasteful
+
+---
+
+## ✅ Solution: useMemo
+
+```jsx id="rf0m8r"
+import { useMemo, useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const expensiveValue = useMemo(() => {
+    return slowFunction(count);
+  }, [count]);
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <p>{expensiveValue}</p>
+    </>
+  );
+}
+```
+
+### 🔍 Explanation
+
+* `useMemo` stores the result
+* Recomputes **only when `count` changes**
+* Closure remembers previous value
+
+---
+
+## ⚠️ When NOT to use useMemo
+
+* Simple calculations
+* Premature optimization
+* When it adds complexity
+
+---
+
+# 🔁 2. useCallback (Memoizing Functions)
+
+## ❌ Problem: Function recreated every render
+
+```jsx id="cqsmlz"
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    console.log("Clicked");
+  }
+
+  return <Child onClick={handleClick} />;
+}
+```
+
+👉 `handleClick` is new every render
+👉 Child re-renders unnecessarily
+
+---
+
+## ✅ Solution: useCallback
+
+```jsx id="yg5zv7"
+import { useCallback, useState } from "react";
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    console.log("Clicked");
+  }, []);
+
+  return <Child onClick={handleClick} />;
+}
+```
+
+### 🔍 Explanation
+
+* `useCallback` memoizes the function
+* Returns the **same function reference**
+* Uses closure to retain scope
+
+---
+
+## 🧩 With React.memo
+
+```jsx id="b8px7j"
+const Child = React.memo(({ onClick }) => {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Click</button>;
+});
+```
+
+👉 Now child re-renders only when props change
+
+---
+
+# ⚡ 3. useMemo vs useCallback
+
+| Hook        | Purpose          | Returns  |
+| ----------- | ---------------- | -------- |
+| useMemo     | Memoize value    | value    |
+| useCallback | Memoize function | function |
+
+---
+
+## 🧠 Mental Model
+
+```text id="0e0f2t"
+useMemo     → caches result
+useCallback → caches function
+```
+
+---
+
+# 🔄 4. Closure + Dependency Trap
+
+```jsx id="1zcb6u"
+const handleClick = useCallback(() => {
+  console.log(count);
+}, []);
+```
+
+### ❌ Problem
+
+* Closure captures old `count`
+* Logs stale value
+
+---
+
+## ✅ Fix
+
+```jsx id="zv5z3l"
+const handleClick = useCallback(() => {
+  console.log(count);
+}, [count]);
+```
+
+👉 Always include dependencies
+
+---
+
+# 🏭 5. Real Pattern: Filtering List
+
+```jsx id="nq9c7s"
+function App({ items }) {
+  const [search, setSearch] = useState("");
+
+  const filteredItems = useMemo(() => {
+    return items.filter(item =>
+      item.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [items, search]);
+
+  return (
+    <>
+      <input onChange={(e) => setSearch(e.target.value)} />
+      <ul>
+        {filteredItems.map(item => <li key={item}>{item}</li>)}
+      </ul>
+    </>
+  );
+}
+```
+
+### 🔍 Why this matters
+
+* Filtering runs only when needed
+* Saves performance for large lists
+
+---
+
+# 🚀 6. Real Pattern: Stable Event Handler
+
+```jsx id="8w3g5l"
+const handleAdd = useCallback(() => {
+  setItems(prev => [...prev, "New Item"]);
+}, []);
+```
+
+### 🔍 Why this works
+
+* Uses functional update → avoids dependency issues
+* Closure safely handles state
+
+---
+
+# 🧩 Visual Flow
+
+```text id="yb6f6h"
+Render
+  ↓
+Create closure
+  ↓
+Memoize (useMemo/useCallback)
+  ↓
+Reuse previous value/function
+```
+
+---
+
+# 🏁 Key Takeaways
+
+* Closures power React hooks
+* `useMemo` → optimize values
+* `useCallback` → stabilize functions
+* Always manage dependencies correctly
+* Overusing these can hurt readability
+
+---
+
+# ⚠️ Golden Rule
+
+> Don’t optimize unless there’s a real performance problem.
+
+---
+
+# 📚 Summary
+
+* Closures + hooks = powerful patterns
+* Memoization avoids wasted work
+* Dependency arrays control behavior
+* Understanding closures = mastering React
+
